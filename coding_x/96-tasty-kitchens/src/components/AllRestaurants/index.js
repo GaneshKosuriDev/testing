@@ -16,7 +16,7 @@ class AllRestaurants extends Component {
       onClickLeftPage,
       onClickRightPage,
     } = this.props
-    console.log('restaurantsList', restaurantsList)
+    // console.log('restaurantsList', restaurantsList)
     return (
       <div>
         <RestaurantsHeader

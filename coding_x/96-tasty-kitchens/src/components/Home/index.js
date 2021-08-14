@@ -13,7 +13,7 @@ const sortByOptions = [
   {
     id: 0,
     displayText: 'Sort by',
-    value: 'initial',
+    value: '',
   },
   {
     id: 1,
@@ -34,7 +34,7 @@ class Home extends Component {
     restaurantsList: [],
     activePage: 1,
     limit: 9,
-    activeOptionId: sortByOptions[1].value,
+    activeOptionId: sortByOptions[0].value,
   }
 
   componentDidMount() {
@@ -63,6 +63,9 @@ class Home extends Component {
   }
 
   getRestaurantsList = async () => {
+    this.setState({
+      isLoading: true,
+    })
     const {activePage, limit, activeOptionId} = this.state
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = `https://apis.ccbp.in/restaurants-list?offset=${
@@ -169,7 +172,7 @@ class Home extends Component {
   )
 
   render() {
-    const {isLoading, restaurantsList} = this.state
+    const {isLoading, restaurantsList, activeOptionId} = this.state
     const {history} = this.props
     return (
       <div className="home-container">
@@ -185,6 +188,7 @@ class Home extends Component {
               restaurantsList={restaurantsList}
               updateActiveOptionId={this.updateActiveOptionId}
               sortByOptions={sortByOptions}
+              activeOptionId={activeOptionId}
             />
           </div>
         )}

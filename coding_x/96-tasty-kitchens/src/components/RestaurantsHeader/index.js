@@ -1,5 +1,7 @@
 import './index.css'
 
+const optionProperties = ['selected', 'disabled', 'hidden']
+
 const RestaurantsHeader = props => {
   const {sortByOptions, activeOptionId, updateActiveOptionId} = props
   const onChangeSortBy = event => {
@@ -20,16 +22,33 @@ const RestaurantsHeader = props => {
           className="sort-by-select"
           value={activeOptionId}
           onChange={onChangeSortBy}
+          data-testid="select"
         >
-          {sortByOptions.map(eachOption => (
-            <option
-              key={eachOption.id}
-              value={eachOption.value}
-              className="select-option"
-            >
-              {eachOption.displayText}
-            </option>
-          ))}
+          {sortByOptions.map((eachOption, index) => {
+            if (index) {
+              return (
+                <option
+                  key={eachOption.id}
+                  value={eachOption.value}
+                  className="select-option"
+                  data-testid="select-option"
+                >
+                  {eachOption.displayText}
+                </option>
+              )
+            }
+            return (
+              <option
+                key={eachOption.id}
+                value={eachOption.value}
+                className="select-option"
+                data-testid="select-option"
+                disabled
+              >
+                {eachOption.displayText}
+              </option>
+            )
+          })}
         </select>
       </div>
     </div>
