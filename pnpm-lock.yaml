@@ -1,0 +1,12 @@
+dependencies:
+  js-cookie: 3.0.0
+lockfileVersion: 5.2
+packages:
+  /js-cookie/3.0.0:
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-oUbbplKuH07/XX2YD2+Q+GMiPpnVXaRz8npE7suhBH9QEkJe2W7mQ6rwuMXHue3fpfcftQwzgyvGzIHyfCSngQ==
+specifiers:
+  js-cookie: ^3.0.0

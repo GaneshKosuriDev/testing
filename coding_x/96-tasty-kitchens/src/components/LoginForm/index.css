@@ -1,0 +1,122 @@
+.login-container {
+  max-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movie-head {
+  color: red;
+
+  align-self: flex-start;
+  margin-left: -600px;
+}
+.login-card {
+  box-shadow: 0px 8px 40px rgba(7, 7, 7, 0.08);
+  padding: 20px;
+  width: 400px;
+  height: 450px;
+  border-radius: 10px;
+  border-width: 0px;
+  padding: 30px;
+  margin: auto;
+}
+.input-label {
+  margin-bottom: 0px;
+  font-family: 'Roboto';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #475569;
+}
+.username-input-field {
+  font-size: 14px;
+  height: 40px;
+  border: 1px solid #d7dfe9;
+  background-color: #e2e8f0;
+  color: #64748b;
+  border-radius: 2px;
+  margin-top: 5px;
+  padding: 8px 16px 8px 16px;
+}
+.password-input-field {
+  font-size: 14px;
+  height: 40px;
+  border: 1px solid #d7dfe9;
+  background-color: #e2e8f0;
+  color: #64748b;
+  border-radius: 2px;
+  margin-top: 5px;
+  padding: 8px 16px 8px 16px;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 100%;
+}
+.movie-header {
+  display: none;
+}
+
+.sign-in {
+  text-align: center;
+  font-size: 25px;
+}
+.login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-button {
+  font-family: 'Roboto';
+  font-weight: bold;
+  font-size: 14px;
+  color: #ffffff;
+  height: 40px;
+  width: 100px;
+  margin-top: 20px;
+  margin-bottom: 2px;
+  background-color: #f7931e;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .login-btn {
+    width: 100%;
+  }
+  .login-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vh;
+    margin-left: 0px;
+    border-radius: 0px;
+  }
+  .movie-head {
+    display: none;
+  }
+  .movie-header {
+    display: inline;
+    color: red;
+    margin-top: -150px;
+  }
+  .sign-in {
+    text-align: left;
+  }
+}
+.error {
+  color: red;
+  font-size: 15px;
+}

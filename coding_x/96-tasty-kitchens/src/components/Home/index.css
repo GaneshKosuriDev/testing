@@ -1,0 +1,54 @@
+.home-offers-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-container {
+  width: '80%' !important;
+}
+
+.carousel-img {
+  width: 100%;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+@media screen and (min-width: 768px) {
+  .home-offers-image {
+    margin-top: 5px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .home-offers-image {
+    margin-top: 10px;
+  }
+  .carousel-img {
+    height: 100vh;
+  }
+}
+
+.poster {
+  height: 100px;
+}
+
+@media (min-width: 768px) {
+  .poster {
+    height: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .poster {
+    height: 250px;
+  }
+}
