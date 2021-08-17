@@ -9,6 +9,12 @@
   align-items: center;
 }
 
+.pagination-button {
+  border: none;
+  background: #ffffff;
+  padding: 0px;
+}
+
 .pagination-container {
   display: flex;
   flex-direction: row;

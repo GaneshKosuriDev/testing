@@ -3,22 +3,24 @@ import {Component} from 'react'
 import './index.css'
 
 class FoodItems extends Component {
-  state = {isClicked: false, activeCount: 1, itemId: ''}
+  state = {isClicked: false, activeCount: 1}
 
   handleClick = () => {
-    const {itemDetails} = this.props
     const {isClicked} = this.state
-    this.setState({isClicked: !isClicked, itemId: itemDetails.id})
+    this.setState({isClicked: !isClicked})
     this.updateLocalStorage(1)
   }
 
   isFoodItemPresentInCart = () => {
-    const oldItem = JSON.parse(localStorage.getItem('cartData')) || []
+    const oldLocalStorageItems =
+      JSON.parse(localStorage.getItem('cartData')) || []
     const {
       itemDetails: {id},
     } = this.props
 
-    const isItemPresent = oldItem.filter(eachItem => eachItem.id === id)
+    const isItemPresent = oldLocalStorageItems.filter(
+      eachItem => eachItem.id === id,
+    )
     if (isItemPresent.length) {
       return true
     }
@@ -26,22 +28,35 @@ class FoodItems extends Component {
   }
 
   updateLocalStorage = count => {
-    const oldItem = JSON.parse(localStorage.getItem('cartData')) || []
+    const oldLocalStorageItems =
+      JSON.parse(localStorage.getItem('cartData')) || []
     const {itemDetails} = this.props
     Object.assign(itemDetails, {count})
     if (this.isFoodItemPresentInCart()) {
-      const newData = oldItem.map(eachItem => {
+      const newData = oldLocalStorageItems.map(eachItem => {
         const item = eachItem
         if (item.id === itemDetails.id) {
-          item.count = eachItem.count + 1
+          item.count = count
         }
         return item
       })
       localStorage.setItem('cartData', JSON.stringify(newData))
     } else {
-      oldItem.push(itemDetails)
-      localStorage.setItem('cartData', JSON.stringify(oldItem))
+      oldLocalStorageItems.push(itemDetails)
+      localStorage.setItem('cartData', JSON.stringify(oldLocalStorageItems))
     }
+  }
+
+  removeItemFromLocalStorage = () => {
+    const oldLocalStorageItems = JSON.parse(localStorage.getItem('cartData'))
+    const {
+      itemDetails: {id},
+    } = this.props
+    const itemIndex = oldLocalStorageItems.findIndex(
+      eachItem => eachItem.id === id,
+    )
+    oldLocalStorageItems.splice(itemIndex, 1)
+    localStorage.setItem('cartData', JSON.stringify(oldLocalStorageItems))
   }
 
   onClickMinusIcon = () => {
@@ -49,6 +64,7 @@ class FoodItems extends Component {
 
     if (activeCount === 1) {
       this.setState({isClicked: false})
+      this.removeItemFromLocalStorage()
     } else if (activeCount > 1) {
       this.setState(prevState => ({
         activeCount: prevState.activeCount - 1,
@@ -71,11 +87,11 @@ class FoodItems extends Component {
 
     return (
       <>
-        <div className="each-food-item-container">
+        <div className="each-food-item-container" data-testid="foodItem">
           <div className="each-item-image">
             <img
               src={itemDetails.imageUrl}
-              alt={`img${itemDetails.id}`}
+              alt="food-item"
               className="item-image"
             />
           </div>
@@ -103,7 +119,9 @@ class FoodItems extends Component {
                     onClick={this.onClickMinusIcon}
                   />
                 </div>
-                <p className="count-value">{activeCount}</p>
+                <p className="count-value" data-testid="active-count">
+                  {activeCount}
+                </p>
                 <div className="plus-icon-container">
                   <img
                     src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482877/Mini%20Projects/plus-icon_nphdse.png"

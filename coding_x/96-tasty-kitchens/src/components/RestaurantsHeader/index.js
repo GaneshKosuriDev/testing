@@ -1,3 +1,5 @@
+import {BsFilterLeft} from 'react-icons/bs'
+
 import './index.css'
 
 const optionProperties = ['selected', 'disabled', 'hidden']
@@ -18,6 +20,9 @@ const RestaurantsHeader = props => {
       </div>
 
       <div className="sort-by-container">
+        <div className="sort-by-icon">
+          <BsFilterLeft />
+        </div>
         <select
           className="sort-by-select"
           value={activeOptionId}

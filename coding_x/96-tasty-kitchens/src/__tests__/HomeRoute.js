@@ -643,27 +643,27 @@ const pageOneRestaurantsListSortByLowestResponse = {
   total: 30,
 }
 
-const pageTwoRestaurantsListSortByHighestResponse = {
+const pageTwoRestaurantsListInitialResponse = {
   restaurants: [
     {
       has_online_delivery: true,
       user_rating: {
-        rating_text: 'Good',
-        rating_color: '9ACD32',
-        total_reviews: 97,
-        rating: 3.9,
+        rating_text: 'Average',
+        rating_color: 'CDD614',
+        total_reviews: 122,
+        rating: 3.4,
       },
-      name: 'Mr Brown',
+      name: 'Oyalo Pizza',
       has_table_booking: 0,
       is_delivering_now: 0,
-      cost_for_two: 500,
-      cuisine: 'Bakery',
+      cost_for_two: 800,
+      cuisine: 'Street Food',
       image_url:
-        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/mr-brown-2300183.webp',
-      id: '2300183',
+        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/oyalo-pizza-2200030.jpg',
+      id: '2200030',
       menu_type: 'VEG',
-      location: 'Addagutta Society - HMT Hills Rd, Kukatpally, Hyderabad,',
-      opens_at: '04:00 PM, Tomorrow',
+      location: 'Bachupally, Hyderabad',
+      opens_at: '02:00 PM, Tomorrow',
       group_by_time: true,
     },
     {
@@ -685,70 +685,6 @@ const pageTwoRestaurantsListSortByHighestResponse = {
       menu_type: 'VEG',
       location: 'Mehdipatnam, Hyderabad',
       opens_at: '12:00 PM, Tomorrow',
-      group_by_time: true,
-    },
-    {
-      has_online_delivery: true,
-      user_rating: {
-        rating_text: 'Good',
-        rating_color: '9ACD32',
-        total_reviews: 51,
-        rating: 3.6,
-      },
-      name: 'Mr.Ice Cream',
-      has_table_booking: 0,
-      is_delivering_now: 0,
-      cost_for_two: 700,
-      cuisine: 'Bakery',
-      image_url:
-        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/mr-ice-cream-2200283.webp',
-      id: '2200283',
-      menu_type: 'VEG',
-      location: 'Street Number 6, Domalguda, Himayatnagar, Hyderabad,',
-      opens_at: '12:00 PM, Tomorrow',
-      group_by_time: true,
-    },
-    {
-      has_online_delivery: true,
-      user_rating: {
-        rating_text: 'Good',
-        rating_color: '9ACD32',
-        total_reviews: 91,
-        rating: 3.5,
-      },
-      name: 'Kalasree Restaurent',
-      has_table_booking: 0,
-      is_delivering_now: 0,
-      cost_for_two: 300,
-      cuisine: 'Street Food',
-      image_url:
-        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/kalasree-restaurent-2200067.webp',
-      id: '2200067',
-      menu_type: 'VEG',
-      location:
-        ' SR Nagar Main Rd, Sanjeeva Reddy Nagar Office Area, Sanjeeva Reddy Nagar, Hyderabad,',
-      opens_at: '04:00 PM, Tomorrow',
-      group_by_time: true,
-    },
-    {
-      has_online_delivery: true,
-      user_rating: {
-        rating_text: 'Average',
-        rating_color: 'CDD614',
-        total_reviews: 122,
-        rating: 3.4,
-      },
-      name: 'Oyalo Pizza',
-      has_table_booking: 0,
-      is_delivering_now: 0,
-      cost_for_two: 800,
-      cuisine: 'Street Food',
-      image_url:
-        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/oyalo-pizza-2200030.jpg',
-      id: '2200030',
-      menu_type: 'VEG',
-      location: 'Bachupally, Hyderabad',
-      opens_at: '02:00 PM, Tomorrow',
       group_by_time: true,
     },
     {
@@ -797,6 +733,28 @@ const pageTwoRestaurantsListSortByHighestResponse = {
     {
       has_online_delivery: true,
       user_rating: {
+        rating_text: 'Good',
+        rating_color: '9ACD32',
+        total_reviews: 91,
+        rating: 3.5,
+      },
+      name: 'Kalasree Restaurent',
+      has_table_booking: 0,
+      is_delivering_now: 0,
+      cost_for_two: 300,
+      cuisine: 'Street Food',
+      image_url:
+        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/kalasree-restaurent-2200067.webp',
+      id: '2200067',
+      menu_type: 'VEG',
+      location:
+        ' SR Nagar Main Rd, Sanjeeva Reddy Nagar Office Area, Sanjeeva Reddy Nagar, Hyderabad,',
+      opens_at: '04:00 PM, Tomorrow',
+      group_by_time: true,
+    },
+    {
+      has_online_delivery: true,
+      user_rating: {
         rating_text: 'Average',
         rating_color: 'CDD614',
         total_reviews: 26,
@@ -813,6 +771,27 @@ const pageTwoRestaurantsListSortByHighestResponse = {
       menu_type: 'VEG',
       location:
         'Near, Ground Floor, Gowra Trinity, Police Lane, Passport Office Rd, Patigadda, ',
+      opens_at: '12:00 PM, Tomorrow',
+      group_by_time: true,
+    },
+    {
+      has_online_delivery: true,
+      user_rating: {
+        rating_text: 'Good',
+        rating_color: '9ACD32',
+        total_reviews: 51,
+        rating: 3.6,
+      },
+      name: 'Mr.Ice Cream',
+      has_table_booking: 0,
+      is_delivering_now: 0,
+      cost_for_two: 700,
+      cuisine: 'Bakery',
+      image_url:
+        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/mr-ice-cream-2200283.webp',
+      id: '2200283',
+      menu_type: 'VEG',
+      location: 'Street Number 6, Domalguda, Himayatnagar, Hyderabad,',
       opens_at: '12:00 PM, Tomorrow',
       group_by_time: true,
     },
@@ -835,6 +814,27 @@ const pageTwoRestaurantsListSortByHighestResponse = {
       menu_type: 'VEG',
       location: 'Balapur Basthi, Banjara Hills, Hyderabad,',
       opens_at: '12:00 PM, Tomorrow',
+      group_by_time: true,
+    },
+    {
+      has_online_delivery: true,
+      user_rating: {
+        rating_text: 'Good',
+        rating_color: '9ACD32',
+        total_reviews: 97,
+        rating: 3.9,
+      },
+      name: 'Mr Brown',
+      has_table_booking: 0,
+      is_delivering_now: 0,
+      cost_for_two: 500,
+      cuisine: 'Bakery',
+      image_url:
+        'https://assets.ccbp.in/frontend/react-js/tasty-kitchens/restaurants/mr-brown-2300183.webp',
+      id: '2300183',
+      menu_type: 'VEG',
+      location: 'Addagutta Society - HMT Hills Rd, Kukatpally, Hyderabad,',
+      opens_at: '04:00 PM, Tomorrow',
       group_by_time: true,
     },
   ],
@@ -925,7 +925,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     server.close()
   })
 
-  it('When HTTP GET request should be made to offersApi is successful, the page should consist of at least two HTML list items, and the offers list should be rendered using a unique key as a prop for each similar offer item :::5:::', async () => {
+  it.skip('When HTTP GET request should be made to offersApi is successful, the page should consist of at least two HTML list items, and the offers list should be rendered using a unique key as a prop for each similar offer item :::5:::', async () => {
     mockGetCookie()
     console.error = message => {
       if (
@@ -950,7 +950,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('HomeRoute should consist of an HTML image element with the given logo URL as src and alt text as "website logo":::5:::', async () => {
+  it.skip('HomeRoute should consist of an HTML image element with the given logo URL as src and alt text as "website logo":::5:::', async () => {
     rtlRender(<App />, homeRoutePath)
     const imageEls = screen.getAllByRole('img', {
       name: /website logo/i,
@@ -959,19 +959,19 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     expect(imageEls[0]).toBeInTheDocument()
   })
 
-  it('HomeRoute should consist of an HTML list item element with "Home" as text content:::5:::', async () => {
+  it.skip('HomeRoute should consist of an HTML list item element with "Home" as text content:::5:::', async () => {
     rtlRender(<App />, homeRoutePath)
     const listEl = screen.getAllByRole('listitem')
     expect(listEl[0].textContent).toMatch(/Home/i)
   })
 
-  it('HomeRoute should consist of an HTML list item element with "Cart" as text content:::5:::', async () => {
+  it.skip('HomeRoute should consist of an HTML list item element with "Cart" as text content:::5:::', async () => {
     rtlRender(<App />, homeRoutePath)
     const listEl = screen.getAllByRole('listitem')
     expect(listEl[1].textContent).toMatch(/Cart/i)
   })
 
-  it('HomeRoute should consist of an HTML button element with "Logout" as text content:::5:::', async () => {
+  it.skip('HomeRoute should consist of an HTML button element with "Logout" as text content:::5:::', async () => {
     rtlRender(<App />, homeRoutePath)
     expect(
       await screen.getByRole('button', {
@@ -981,7 +981,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     ).toBeInTheDocument()
   })
 
-  it('When the logout button is clicked then the Cookies.remove() method should be called with the "jwt_token" string as an argument:::5:::', async () => {
+  it.skip('When the logout button is clicked then the Cookies.remove() method should be called with the "jwt_token" string as an argument:::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1003,7 +1003,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('When the logout button is clicked then the history.replace() method should be called with the argument "/login":::5:::', async () => {
+  it.skip('When the logout button is clicked then the history.replace() method should be called with the argument "/login":::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     const {history} = rtlRender(<App />, homeRoutePath)
@@ -1027,7 +1027,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('When the logout button is clicked then the page should be navigated to LoginRoute:::5:::', async () => {
+  it.skip('When the logout button is clicked then the page should be navigated to LoginRoute:::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     const {history} = rtlRender(<App />, homeRoutePath)
@@ -1051,7 +1051,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreRemoveCookieFns()
   })
 
-  it('When the "/bad-path" is provided in the browser tab then the page should be navigated to NotFoundRoute and consists of an HTML image element with the given not found image and alt text as "page not found":::5:::', async () => {
+  it.skip('When the "/bad-path" is provided in the browser tab then the page should be navigated to NotFoundRoute and consists of an HTML image element with the given not found image and alt text as "page not found":::5:::', async () => {
     const {history} = rtlRender(<App />, notFoundRoutePath)
     const imageEl = await screen.getByRole('img', {
       name: /page not found/i,
@@ -1061,7 +1061,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     expect(history.location.pathname).toBe(notFoundRoutePath)
   })
 
-  it('HomeRoute should consist of an HTML heading element with "Popular Restaurants" as text content:::5:::', async () => {
+  it.skip('HomeRoute should consist of an HTML heading element with "Popular Restaurants" as text content:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
     await screen.findAllByAltText(/offer/i, {exact: false})
@@ -1080,7 +1080,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('HomeRoute should consist of an HTML paragraph element with "Select Your favourite restaurent special dish and make your day happy..." as text content:::5:::', async () => {
+  it.skip('HomeRoute should consist of an HTML paragraph element with "Select Your favourite restaurent special dish and make your day happy..." as text content:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
     await screen.findAllByAltText(/offer/i, {exact: false})
@@ -1108,7 +1108,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('When the Home Route is opened, it should initially contain an HTML container element with testid attribute value as "loader":::5:::', async () => {
+  it.skip('When the Home Route is opened, it should initially contain an HTML container element with testid attribute value as "loader":::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
     await screen.queryByTestId('loader')
@@ -1123,7 +1123,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('When the Restaurants List offers and Restaurants data fetched successfully then the HTML container element with testid attribute value as "loader" should not visible to the user:::5:::', async () => {
+  it.skip('When the Restaurants List offers and Restaurants data fetched successfully then the HTML container element with testid attribute value as "loader" should not visible to the user:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
     await screen.queryByTestId('loader')
@@ -1139,7 +1139,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreGetCookieFns()
   })
 
-  it('When the Home Route is opened then the page should contain at least 2 HTML images with alt text as "offer":::5:::', async () => {
+  it.skip('When the Home Route is opened then the page should contain at least 2 HTML images with alt text as "offer":::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1156,7 +1156,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreRemoveCookieFns()
   })
 
-  it('When the Home Route is opened then the page should contain 9 HTML images restaurants list items with aria-label="restaurant-list":::5:::', async () => {
+  it.skip('When the Home Route is opened then the page should contain 9 HTML images restaurants list items with aria-label="restaurant-list":::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1176,7 +1176,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreRemoveCookieFns()
   })
 
-  it('When the Home Route is opened then the page should contain at least 2 HTML images with alt text as "offer":::5:::', async () => {
+  it.skip('When the Home Route is opened then the page should contain at least 2 HTML images with alt text as "offer":::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1193,7 +1193,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreRemoveCookieFns()
   })
 
-  it('The Restaurants List select filter should contain "Sort By" as default selected value:::5:::', async () => {
+  it.skip('The Restaurants List select filter should contain "Sort By" as default selected value:::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1212,7 +1212,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreRemoveCookieFns()
   })
 
-  it('The Restraunts List should be sort by Highest when user select sort by filter value as "Highest":::5:::', async () => {
+  it.skip('The Restraunts List should be sort by Highest when user select sort by filter value as "Highest":::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1251,7 +1251,7 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
     restoreRemoveCookieFns()
   })
 
-  it('The Restraunts List should be sort by Highest when user select sort by filter value as "Lowest":::5:::', async () => {
+  it.skip('The Restraunts List should be sort by Highest when user select sort by filter value as "Lowest":::5:::', async () => {
     mockRemoveCookie()
     mockGetCookie()
     rtlRender(<App />, homeRoutePath)
@@ -1286,6 +1286,54 @@ describe('Tasty Kitchen Application Authentication Home Route Tests', () => {
         exact: false,
       }),
     ).toBeInTheDocument()
+    restoreGetCookieFns()
+    restoreRemoveCookieFns()
+  })
+
+  it.skip('When the HTML button element with testid="pagination-right-button" is clicked then restraunts List of second page with selected filter should be visible to the user:::5:::', async () => {
+    mockRemoveCookie()
+    mockGetCookie()
+    rtlRender(<App />, homeRoutePath)
+    await screen.findAllByAltText(/offer/i, {exact: false})
+    expect(
+      await screen.findByRole('heading', {
+        name: /Village Traditional Foods/i,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    // userEvent.selectOptions(screen.getByRole('combobox'), ['Highest'])
+    // const paginationRightBtn = await screen.findByTestId(
+    //   'pagination-right-button',
+    // )
+
+    screen.debug()
+
+    // expect(paginationRightBtn).toBeInTheDocument()
+    // const {} = pageTwoRestaurantsListInitialResponse
+    // userEvent.click(screen.getByText('Check'))
+    // userEvent.click(paginationRightBtn)
+    // await screen.findAllByAltText(/offer/i, {exact: false})
+    // expect(
+    //   await screen.findByRole('heading', {
+    //     name: /Oyalo Pizza/i,
+    //     exact: false,
+    //   }),
+    // ).toBeInTheDocument()
+
+    // const {restaurants} = pageOneRestaurantsListSortByLowestResponse
+    // const {name} = restaurants[3]
+    // const restaurantsListItems = screen.getAllByRole('listitem', {
+    //   name: /restaurant-item/i,
+    // })
+
+    // expect(
+    //   await within(restaurantsListItems[3]).findByRole('heading', {
+    //     name,
+    //     exact: false,
+    //   }),
+    // ).toBeInTheDocument()
+
     restoreGetCookieFns()
     restoreRemoveCookieFns()
   })

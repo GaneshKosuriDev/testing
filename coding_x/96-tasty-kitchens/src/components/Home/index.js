@@ -172,7 +172,7 @@ class Home extends Component {
   )
 
   render() {
-    const {isLoading, restaurantsList, activeOptionId} = this.state
+    const {isLoading, restaurantsList, activeOptionId, activePage} = this.state
     const {history} = this.props
     return (
       <div className="home-container">
@@ -189,6 +189,7 @@ class Home extends Component {
               updateActiveOptionId={this.updateActiveOptionId}
               sortByOptions={sortByOptions}
               activeOptionId={activeOptionId}
+              activePage={activePage}
             />
           </div>
         )}

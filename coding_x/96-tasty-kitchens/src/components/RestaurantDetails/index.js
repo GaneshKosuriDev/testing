@@ -46,8 +46,6 @@ class RestaurantDetails extends Component {
     const response = await fetch(apiUrl, options)
     if (response.ok) {
       const fetchedData = await response.json()
-      // console.log(fetchedData)
-
       const foodItemsData = fetchedData.food_items.map(item => ({
         name: item.name,
         id: item.id,
@@ -78,7 +76,7 @@ class RestaurantDetails extends Component {
         <div className="restaurant-Image-text-details-container">
           <img
             src={restaurantData.image_url}
-            alt={`img${restaurantData.id}`}
+            alt="restaurant"
             className="separate-restaurant-image"
           />
 
@@ -122,7 +120,13 @@ class RestaurantDetails extends Component {
 
   renderLoader = () => (
     <div className="loader-container">
-      <Loader type="Oval" color="gold" height="40" width="50" />
+      <Loader
+        data-tesid="loader"
+        type="Oval"
+        color="gold"
+        height="40"
+        width="50"
+      />
     </div>
   )
 

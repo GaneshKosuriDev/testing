@@ -16,7 +16,6 @@ class AllRestaurants extends Component {
       onClickLeftPage,
       onClickRightPage,
     } = this.props
-    // console.log('restaurantsList', restaurantsList)
     return (
       <div>
         <RestaurantsHeader
@@ -63,21 +62,33 @@ class AllRestaurants extends Component {
             ))}
           </ul>
           <div className="pagination-container">
-            <img
-              src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482424/Mini%20Projects/left-Icon_k6ywah.png"
-              alt="left-icon"
-              className="pagination-icon"
+            <button
+              type="button"
               onClick={onClickLeftPage}
-            />
+              className="pagination-button"
+              data-testid="pagination-left-button"
+            >
+              <img
+                src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482424/Mini%20Projects/left-Icon_k6ywah.png"
+                alt="left-icon"
+                className="pagination-icon"
+              />
+            </button>
             <p className="page-count-numbers">
-              <span>{activePage}</span> to <span>4</span>
+              <span>{activePage}</span> of <span>4</span>
             </p>
-            <img
-              src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482424/Mini%20Projects/right-Icon_eo1jkg.png"
-              alt="left-icon"
-              className="pagination-icon"
+            <button
+              type="button"
               onClick={onClickRightPage}
-            />
+              className="pagination-button"
+              data-testid="pagination-right-button"
+            >
+              <img
+                src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482424/Mini%20Projects/right-Icon_eo1jkg.png"
+                alt="left-icon"
+                className="pagination-icon"
+              />
+            </button>
           </div>
         </div>
       </div>

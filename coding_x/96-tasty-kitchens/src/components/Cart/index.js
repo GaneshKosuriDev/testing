@@ -17,7 +17,6 @@ class Cart extends Component {
 
   getCartData = () => {
     const cartItems = JSON.parse(localStorage.getItem('cartData'))
-    console.log('cart Data in Cart', cartItems)
     if (cartItems != null) {
       const orderItem = cartItems.map(item => ({
         name: item.name,

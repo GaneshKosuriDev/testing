@@ -13,8 +13,7 @@ const CartEmpty = () => (
       />
       <h1 className="empty-cart-heading">No Order Yet!</h1>
       <p className="empty-cart-description">
-        we`re sorry, the page you requested could not be found. Please go back
-        to the homepage
+        Your cart is empty. Add something from the menu.
       </p>
       <Link to="/" style={{textDecoration: 'none'}}>
         <button type="button" className="home-btn">
