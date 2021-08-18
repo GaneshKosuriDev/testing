@@ -27,7 +27,7 @@ class AllRestaurants extends Component {
         <div className="Restaurants-container" key={restaurantsList.id}>
           <ul className="Restaurants-items-container" aria-label="restaurants">
             {restaurantsList.map(item => (
-              <li key={item.id} aria-label="restaurant-item">
+              <li key={item.id} testid="restaurant-item">
                 <Link
                   to={`/restaurant/${item.id}`}
                   style={{textDecoration: 'none'}}
@@ -66,7 +66,7 @@ class AllRestaurants extends Component {
               type="button"
               onClick={onClickLeftPage}
               className="pagination-button"
-              data-testid="pagination-left-button"
+              testid="pagination-left-button"
             >
               <img
                 src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482424/Mini%20Projects/left-Icon_k6ywah.png"
@@ -81,7 +81,7 @@ class AllRestaurants extends Component {
               type="button"
               onClick={onClickRightPage}
               className="pagination-button"
-              data-testid="pagination-right-button"
+              testid="pagination-right-button"
             >
               <img
                 src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482424/Mini%20Projects/right-Icon_eo1jkg.png"

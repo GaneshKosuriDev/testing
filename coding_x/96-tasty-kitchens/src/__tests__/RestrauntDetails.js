@@ -1,5 +1,5 @@
 import {createMemoryHistory} from 'history'
-import {Router} from 'react-router-dom'
+import {Router, BrowserRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {setupServer} from 'msw/node'
 import {rest} from 'msw'
@@ -14,11 +14,6 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import App from '../App'
-
-// const jsxCode = fs.readFileSync(
-//   path.resolve(__dirname, '../components/ProductItemDetails/index.js'),
-//   'utf8',
-// )
 
 const restaurantDetailsPath = '/restaurant/2200043'
 const cartRoutePath = '/cart'
@@ -217,6 +212,11 @@ const restoreRemoveCookieFns = () => {
   Cookies.remove.mockRestore()
 }
 
+const renderWithBrowserRouter = (ui = <App />, {route = '/'} = {}) => {
+  window.history.pushState({}, 'Test page', route)
+  return render(ui, {wrapper: BrowserRouter})
+}
+
 const rtlRender = (ui = <App />, path = '/') => {
   const history = createMemoryHistory()
   history.push(path)
@@ -226,6 +226,29 @@ const rtlRender = (ui = <App />, path = '/') => {
   }
 }
 
+const mockLocalStorage = (function () {
+  let store = {}
+
+  return {
+    getItem: function (key) {
+      return store[key] || null
+    },
+    setItem: function (key, value) {
+      store[key] = value.toString()
+    },
+    removeItem: function (key) {
+      delete store[key]
+    },
+    clear: function () {
+      store = {}
+    },
+  }
+})()
+
+const restoreLocalStorage = () => {
+  localStorage.clear()
+}
+
 const originalConsoleError = console.error
 
 describe('Restaurant Details Route tests', () => {
@@ -233,15 +256,22 @@ describe('Restaurant Details Route tests', () => {
     server.listen()
   })
 
+  beforeEach(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: mockLocalStorage,
+    })
+  })
+
   afterEach(() => {
     server.resetHandlers()
+    restoreLocalStorage()
   })
 
   afterAll(() => {
     server.close()
   })
 
-  it.skip('When HTTP GET request should be made to restaurantDetailsAPI is successful, the page should consist of at least two HTML list items, and the food items list should be rendered using a unique key as a prop for each food item :::5:::', async () => {
+  it('When HTTP GET request should be made to restaurantDetailsAPI is successful, the page should consist of at least two HTML list items, and the food items list should be rendered using a unique key as a prop for each food item :::5:::', async () => {
     mockGetCookie()
     console.error = message => {
       if (
@@ -265,7 +295,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('The Restaurant Details Page should contain at least 15 food item images with alt text "food-item" :::5:::', async () => {
+  it('The Restaurant Details Page should contain at least 15 food item images with alt text "food-item" :::5:::', async () => {
     mockGetCookie()
     console.error = message => {
       if (
@@ -292,7 +322,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('The Empty Cart view should be displayed when the user didnt add any food items to the cart:::5:::', async () => {
+  it('The Empty Cart view should be displayed when the user didnt add any food items to the cart:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -314,7 +344,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the Restaurant Details Route is accessed, then the HTML container element with testid attribute value as "loader" should not visible to the user:::5:::', async () => {
+  it('When the Restaurant Details Route is accessed, then the HTML container element with testid attribute value as "loader" should not visible to the user:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     await screen.queryByTestId('loader')
@@ -329,7 +359,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML image element with alt as "restaurant" and src equal to the value of the key "image_url" should be displayed:::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, an HTML image element with alt as "restaurant" and src equal to the value of the key "image_url" should be displayed:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
 
@@ -348,7 +378,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML main heading element with text content as the value of the key "name" should be displayed:::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, an HTML main heading element with text content as the value of the key "name" should be displayed:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -360,7 +390,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as the value of the key "cuisine" should be displayed:::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as the value of the key "cuisine" should be displayed:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -379,7 +409,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as the value of the key "rating" should be displayed:::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as the value of the key "rating" should be displayed:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -398,7 +428,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as the value of the key "cost_for_two" should be displayed:::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as the value of the key "cost_for_two" should be displayed:::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -418,7 +448,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as "Cost for two":::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as "Cost for two":::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -435,7 +465,7 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it.skip('When the HTTP GET request in the Restaurant Details route is successful, the page should contain all the food item images in that restaurant with alt text as "food-item":::5:::', async () => {
+  it('When the HTTP GET request in the Restaurant Details route is successful, the page should contain all the food item images in that restaurant with alt text as "food-item":::5:::', async () => {
     mockGetCookie()
     rtlRender(<App />, restaurantDetailsPath)
     expect(
@@ -457,9 +487,10 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  it('When the HTTP GET request in the Restaurant Details route is successful, the page should contain all the food item images in that restaurant with alt text as "food-item":::5:::', async () => {
+  it('The Cart should be empty by default when user didnt add food items to it:::5:::', async () => {
     mockGetCookie()
-    rtlRender(<App />, restaurantDetailsPath)
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+
     expect(
       await screen.findByRole('heading', {
         name: restaurantDetailsResponse.name,
@@ -467,14 +498,50 @@ describe('Restaurant Details Route tests', () => {
       }),
     ).toBeInTheDocument()
 
-    const firstFoodItemAddButton = screen.getAllByRole('button', {
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    restoreGetCookieFns()
+  })
+
+  it('When the HTTP GET request in the Restaurant Details route is successful, When the HTML button element with text Add is clicked in any Food item then Item should be added to cart:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
       name: /Add/i,
       exact: false,
-    })[0]
-    userEvent.click(firstFoodItemAddButton)
-    // const activeFoodItemCountElement = screen.getByTestId('active-count')
+    })
 
-    rtlRender(<App />, cartRoutePath)
+    userEvent.click(firstFoodItemAddButton)
+    // TODO: need to resolve
+    // expect(localStorage.setItem).toHaveBeenCalled()
+    const activeFoodItemCountElement = within(firstFoodItem).getByTestId(
+      'active-count',
+    )
+
+    expect(activeFoodItemCountElement.textContent).toBe('1')
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+
     expect(
       await screen.queryByRole('heading', {
         name: /No Order Yet!/i,
@@ -485,330 +552,366 @@ describe('Restaurant Details Route tests', () => {
     restoreGetCookieFns()
   })
 
-  //   it.skip('JS code implementation for Restaurant Details should use "BsPlusSquare" and "BsDashSquare" from the react-icons package :::5:::', async () => {
-  //     expect(jsxCode.match(/BsPlusSquare/).length).toBeGreaterThanOrEqual(1)
-  //     expect(jsxCode.match(/<BsPlusSquare/).length).toBeGreaterThanOrEqual(1)
-  //     expect(jsxCode.match(/BsDashSquare/).length).toBeGreaterThanOrEqual(1)
-  //     expect(jsxCode.match(/<BsDashSquare/).length).toBeGreaterThanOrEqual(1)
-  //   })
+  it('The Cart Should be empty when the user remove all food items in restaurant Details Route:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
 
-  //   it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML button element with testid "plus" should be displayed:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(screen.getByTestId('plus')).toBeInTheDocument()
-  //     expect(screen.getByTestId('plus').tagName).toBe('BUTTON')
-  //     restoreGetCookieFns()
-  //   })
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(firstFoodItemAddButton)
+    expect(
+      within(firstFoodItem).queryByRole('button', {
+        name: /Add/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+    const firstFoodItemActiveCountElement = within(firstFoodItem).getByTestId(
+      'active-count',
+    )
+    expect(firstFoodItemActiveCountElement.textContent).toBe('1')
+    const firstFoodItemMinusButton = within(firstFoodItem).getByTestId(
+      'minus-button',
+    )
+    userEvent.click(firstFoodItemMinusButton)
+    const secondFoodItem = foodItems[1]
+    const secondFoodItemAddButton = within(secondFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(secondFoodItemAddButton)
+    const secondFoodItemActiveCountElement = within(secondFoodItem).getByTestId(
+      'active-count',
+    )
+    expect(secondFoodItemActiveCountElement.textContent).toBe('1')
+    const secondFoodItemMinusButton = within(secondFoodItem).getByTestId(
+      'minus-button',
+    )
+    userEvent.click(secondFoodItemMinusButton)
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+    restoreGetCookieFns()
+  })
 
-  //   it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML button element with testid "minus" should be displayed:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(screen.getByTestId('minus')).toBeInTheDocument()
-  //     expect(screen.getByTestId('minus').tagName).toBe('BUTTON')
-  //     restoreGetCookieFns()
-  //   })
+  it('The Cart Route should contain food items with added quantity:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
 
-  //   it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML paragraph element with text content as "1" for quantity should be displayed:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByText(/^1/, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(/^1/, {
-  //         exact: false,
-  //       }).tagName,
-  //     ).toBe('P')
-  //     restoreGetCookieFns()
-  //   })
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(firstFoodItemAddButton)
+    expect(
+      within(firstFoodItem).queryByRole('button', {
+        name: /Add/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+    const firstFoodItemActiveCountElement = within(firstFoodItem).getByTestId(
+      'active-count',
+    )
+    expect(firstFoodItemActiveCountElement.textContent).toBe('1')
+    const firstFoodItemPlusButton = within(firstFoodItem).getByTestId(
+      'plus-button',
+    )
+    userEvent.click(firstFoodItemPlusButton)
 
-  //   it.skip('When the HTTP GET request in the Restaurant Details route is successful, an HTML button element with text content as "ADD TO CART" should be displayed:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByRole('button', {
-  //         name: /Add To Cart/i,
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    const secondFoodItem = foodItems[1]
+    const secondFoodItemAddButton = within(secondFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(secondFoodItemAddButton)
+    const secondFoodItemActiveCountElement = within(secondFoodItem).getByTestId(
+      'active-count',
+    )
+    expect(secondFoodItemActiveCountElement.textContent).toBe('1')
+    const secondFoodItemPlusButton = within(secondFoodItem).getByTestId(
+      'plus-button',
+    )
+    userEvent.click(secondFoodItemPlusButton)
 
-  //   it.skip('When the HTML button with testid "plus" is clicked, the quantity should be incremented by one:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     userEvent.click(screen.getByTestId('plus'))
-  //     expect(
-  //       screen.getByText(/^2/, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
 
-  //   it.skip('When the HTML button with testid "minus" is clicked, the quantity should be decremented by one:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     userEvent.click(screen.getByTestId('plus'))
-  //     userEvent.click(screen.getByTestId('minus'))
-  //     expect(
-  //       screen.getByText(/^1/, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    const cartItems = screen.getAllByTestId('cartItem')
+    const firstCartItem = cartItems[0]
+    const secondCartItem = cartItems[1]
+    const firstCartItemQuantity = within(firstCartItem).getByText('2')
+    const secondCartItemQuantity = within(secondCartItem).getByText('2')
+    expect(firstCartItemQuantity).toBeInTheDocument()
+    expect(secondCartItemQuantity).toBeInTheDocument()
 
-  //   it.skip('When the HTML button with testid "minus" is clicked, the quantity should not be decremented below one:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByText(/^1/, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     userEvent.click(screen.getByTestId('minus'))
-  //     expect(
-  //       screen.getByText(/^1/, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    restoreGetCookieFns()
+  })
 
-  //   it.skip('Page should consist of at least two HTML unordered list elements to display the links in the Header and the list of similar products:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(screen.getAllByRole('list').length).toBeGreaterThanOrEqual(2)
-  //     expect(screen.getAllByRole('list')[0].tagName).toBe('UL')
-  //     expect(screen.getAllByRole('list')[1].tagName).toBe('UL')
-  //     restoreGetCookieFns()
-  //   })
+  it('The Cart should be empty when the user remove the items in the Cart by Decreasing quantity for all the cart items:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
 
-  //   it.skip('Page should consist of at least six HTML list items to display the links in Header and the list of similar products:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(screen.getAllByRole('listitem').length).toBeGreaterThanOrEqual(6)
-  //     restoreGetCookieFns()
-  //   })
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(firstFoodItemAddButton)
+    expect(
+      within(firstFoodItem).queryByRole('button', {
+        name: /Add/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
 
-  //   it.skip('Page should consist of HTML image elements with alt text starting with "similar product" and src as the value of the key "image_url" received in the similar_products list received in the response:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getAllByRole('img', {name: /similar product/i, exact: false})
-  //         .length,
-  //     ).toBeGreaterThanOrEqual(3)
-  //     expect(
-  //       screen.getAllByRole('img', {name: /similar product/i, exact: false})[0]
-  //         .src,
-  //     ).toBe(productDetailsResponse.similar_products[0].image_url)
-  //     expect(
-  //       screen.getAllByRole('img', {name: /similar product/i, exact: false})[1]
-  //         .src,
-  //     ).toBe(productDetailsResponse.similar_products[1].image_url)
-  //     expect(
-  //       screen.getAllByRole('img', {name: /similar product/i, exact: false})[2]
-  //         .src,
-  //     ).toBe(productDetailsResponse.similar_products[2].image_url)
-  //     restoreGetCookieFns()
-  //   })
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
 
-  //   it.skip('Page should consist of HTML paragraph element with text content as the value of the key "title" received in the similar_products list received in the response:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[0].title, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[1].title, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[2].title, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    const cartItems = screen.getAllByTestId('cartItem')
+    const firstCartItem = cartItems[0]
+    const firstCartItemQuantity = within(firstCartItem).getByText('1')
+    expect(firstCartItemQuantity).toBeInTheDocument()
+    const firstCartItemMinusButton = within(firstCartItem).getByTestId(
+      'cart-minus-button',
+    )
+    userEvent.click(firstCartItemMinusButton)
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+    restoreGetCookieFns()
+  })
 
-  //   it.skip('Page should consist of HTML paragraph element with text content as the value of the key "brand" received in the similar_products list received in the response:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[0].brand, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[1].brand, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[2].brand, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+  it('The cart total price value should change accordingly when the cart items quantity is changed:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
 
-  //   it.skip('Page should consist of HTML paragraph element with text content as the value of the key "rating" received in the similar_products list received in the response:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[0].rating, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[1].rating, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[2].rating, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(firstFoodItemAddButton)
+    expect(
+      within(firstFoodItem).queryByRole('button', {
+        name: /Add/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
 
-  //   it.skip('Page should consist of HTML paragraph element with text content as the value of the key "price" received in the similar_products list received in the response:::5:::', async () => {
-  //     mockGetCookie()
-  //     renderWithBrowserRouter(<App />, {route: productDetailsPath})
-  //     await waitFor(() => {
-  //       expect(
-  //         screen.getByRole('heading', {
-  //           name: productDetailsResponse.title,
-  //           exact: false,
-  //         }),
-  //       ).toBeInTheDocument()
-  //     })
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[0].price, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[1].price, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     expect(
-  //       screen.getByText(productDetailsResponse.similar_products[2].price, {
-  //         exact: false,
-  //       }),
-  //     ).toBeInTheDocument()
-  //     restoreGetCookieFns()
-  //   })
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+
+    const cartItems = screen.getAllByTestId('cartItem')
+    const firstCartItem = cartItems[0]
+    const firstCartItemQuantity = within(firstCartItem).getByTestId(
+      'item-quantity',
+    )
+    expect(firstCartItemQuantity.textContent).toBe('1')
+    const firstCartItemPlusButton = within(firstCartItem).getByTestId(
+      'cart-plus-button',
+    )
+    userEvent.click(firstCartItemPlusButton)
+    userEvent.click(firstCartItemPlusButton)
+    expect(firstCartItemQuantity.textContent).toBe('3')
+    const {food_items} = restaurantDetailsResponse
+    const {cost} = food_items[0]
+    const quantityThreeTotalPrice = `${3 * cost}.00`
+    const totalPriceElement = screen.getByTestId('total-price')
+    expect(totalPriceElement.textContent).toBe(quantityThreeTotalPrice)
+    const firstCartItemMinusButton = within(firstCartItem).getByTestId(
+      'cart-minus-button',
+    )
+    userEvent.click(firstCartItemMinusButton)
+    expect(firstCartItemQuantity.textContent).toBe('2')
+    const quantityTwoTotalPrice = `${2 * cost}.00`
+    expect(totalPriceElement.textContent).toBe(quantityTwoTotalPrice)
+    restoreGetCookieFns()
+  })
+
+  it('When the user click the HTML button element with text "Place Order" then the "Payment Successful" view should be displayed:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(firstFoodItemAddButton)
+    expect(
+      within(firstFoodItem).queryByRole('button', {
+        name: /Add/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+
+    const cartItems = screen.getAllByTestId('cartItem')
+    const firstCartItem = cartItems[0]
+    const firstCartItemQuantity = within(firstCartItem).getByTestId(
+      'item-quantity',
+    )
+    expect(firstCartItemQuantity.textContent).toBe('1')
+    const placeOrderButton = screen.getByRole('button', {
+      name: /Place Order/i,
+      exact: false,
+    })
+    userEvent.click(placeOrderButton)
+    expect(
+      await screen.getByRole('heading', {
+        name: /Payment Successful/i,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    const successMessageElement = screen.getByText(
+      /Thank you for ordering Your payment is successfully completed/i,
+      {exact: false},
+    )
+    expect(successMessageElement.tagName).toBe('P')
+
+    restoreGetCookieFns()
+  })
+
+  it('After Payment Successful, If the user click the HTML button element with text "Go to Home Page" then the page should redirect to home page:::5:::', async () => {
+    mockGetCookie()
+    renderWithBrowserRouter(<App />, {route: restaurantDetailsPath})
+    expect(
+      await screen.findByRole('heading', {
+        name: restaurantDetailsResponse.name,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    const foodItems = screen.getAllByTestId('foodItem')
+    const firstFoodItem = foodItems[0]
+    const firstFoodItemAddButton = within(firstFoodItem).getByRole('button', {
+      name: /Add/i,
+      exact: false,
+    })
+    userEvent.click(firstFoodItemAddButton)
+    expect(
+      within(firstFoodItem).queryByRole('button', {
+        name: /Add/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+
+    const listEl = screen.getAllByRole('listitem')
+    expect(listEl[1].textContent).toMatch(/Cart/i)
+    userEvent.click(listEl[1])
+    expect(
+      await screen.queryByRole('heading', {
+        name: /No Order Yet!/i,
+        exact: false,
+      }),
+    ).not.toBeInTheDocument()
+
+    const cartItems = screen.getAllByTestId('cartItem')
+    const firstCartItem = cartItems[0]
+    const firstCartItemQuantity = within(firstCartItem).getByTestId(
+      'item-quantity',
+    )
+    expect(firstCartItemQuantity.textContent).toBe('1')
+    const placeOrderButton = screen.getByRole('button', {
+      name: /Place Order/i,
+      exact: false,
+    })
+    userEvent.click(placeOrderButton)
+    expect(
+      await screen.getByRole('heading', {
+        name: /Payment Successful/i,
+        exact: false,
+      }),
+    ).toBeInTheDocument()
+
+    const successMessageElement = screen.getByText(
+      /Thank you for ordering Your payment is successfully completed/i,
+      {exact: false},
+    )
+    expect(successMessageElement.tagName).toBe('P')
+    const goToHomePage = screen.getByRole('button', {
+      name: /Go to Home Page/i,
+      exact: false,
+    })
+    userEvent.click(goToHomePage)
+    restoreGetCookieFns()
+  })
 })

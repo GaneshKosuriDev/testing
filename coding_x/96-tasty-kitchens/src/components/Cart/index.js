@@ -1,8 +1,8 @@
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
-// import {HiOutlineMinusSm} from 'react-icons/hi'
-// import {BsPlus} from 'react-icons/bs'
-// import {FaRupeeSign, FaCheckCircle} from 'react-icons/fa'
+import {HiOutlineMinusSm} from 'react-icons/hi'
+import {BsPlus} from 'react-icons/bs'
+import {FaRupeeSign, FaCheckCircle} from 'react-icons/fa'
 import './index.css'
 import Header from '../Header'
 import Footer from '../Footer'
@@ -16,9 +16,13 @@ class Cart extends Component {
   }
 
   getCartData = () => {
-    const cartItems = JSON.parse(localStorage.getItem('cartData'))
-    if (cartItems != null) {
-      const orderItem = cartItems.map(item => ({
+    const items = localStorage.getItem('cartData')
+    let oldLocalStorageItems = []
+    if (items) {
+      oldLocalStorageItems = JSON.parse(items)
+    }
+    if (oldLocalStorageItems) {
+      const orderItem = oldLocalStorageItems.map(item => ({
         name: item.name,
         id: item.id,
         imageUrl: item.imageUrl,
@@ -29,6 +33,39 @@ class Cart extends Component {
     } else {
       this.setState({itemsList: 0})
     }
+  }
+
+  onClickMinus = id => {
+    const {itemsList} = this.state
+    const updatedCartItems = itemsList.map(cartItem => {
+      if (cartItem.id === id) {
+        const updatedItem = cartItem
+        const updatedCount = cartItem.count - 1
+        if (updatedCount) {
+          updatedItem.count = updatedCount
+          return updatedItem
+        }
+        return null
+      }
+      return cartItem
+    })
+    const filteredCartItems = updatedCartItems.filter(cartItem => cartItem)
+    this.setState({itemsList: filteredCartItems})
+    localStorage.setItem('cartData', JSON.stringify(filteredCartItems))
+  }
+
+  onClickPlus = id => {
+    const {itemsList} = this.state
+    const updatedCartItems = itemsList.map(cartItem => {
+      if (cartItem.id === id) {
+        const updatedItem = cartItem
+        updatedItem.count = updatedItem.count + 1
+        return updatedItem
+      }
+      return cartItem
+    })
+    this.setState({itemsList: updatedCartItems})
+    localStorage.setItem('cartData', JSON.stringify(updatedCartItems))
   }
 
   clickPlaceOrder = () => {
@@ -44,51 +81,6 @@ class Cart extends Component {
       <div className="all-cart-items-container">
         <Header />
         <div className="items-cart-container">
-          <div className="mobile-ordered-food-items-container">
-            {itemsList.map(item => (
-              <div className="ordered-each-food-item-container" key={item.id}>
-                <div className="dish-image-container">
-                  <img src={item.imageUrl} alt="img" className="dish-image" />
-                </div>
-                <div className="dish-details-container">
-                  <h1 className="dish-name">{item.name}</h1>
-                  <div className="dish-count-container">
-                    {/* <HiOutlineMinusSm
-                      className="dish-minus-icon"
-                      onClick={this.clickMinus}
-                    /> */}
-                    <p className="dish-count">{item.activeCount}</p>
-                    {/* <BsPlus
-                      className="dish-plus-icon"
-                      onClick={this.clickPlus}
-                    /> */}
-                  </div>
-                  <div className="dish-cost-container">
-                    {/* <FaRupeeSign className="dish-rupees-icon" /> */}
-                    <p className="dish-cost">{`${item.cost}.00`}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="check-out-container">
-              <div className="price-container">
-                <h1 className="final-price-heading">Order Total:</h1>
-                <div className="total-price-container">
-                  {/* <FaRupeeSign className="dish-rupees-icon" /> */}
-                  <p className="final-price">{`${sum}.00`}</p>
-                </div>
-              </div>
-              <div className="order-placed-btn-container">
-                <button
-                  type="button"
-                  className="order-placed-btn"
-                  onClick={this.clickPlaceOrder}
-                >
-                  Place Order
-                </button>
-              </div>
-            </div>
-          </div>
           <div className="desktop-cart-container">
             <div className="item-quantity-price-heading-container">
               <p className="title">Item</p>
@@ -97,7 +89,11 @@ class Cart extends Component {
             </div>
             <div>
               {itemsList.map(item => (
-                <div className="desktop-order-container" key={item.id}>
+                <div
+                  className="desktop-order-container"
+                  key={item.id}
+                  testid="cartItem"
+                >
                   <div className="desktop-ordered-item-heading-img-container">
                     <div className="desktop-ordered-item-heading-img-align">
                       <img
@@ -112,20 +108,28 @@ class Cart extends Component {
                   </div>
                   <div className="desktop-ordered-item-count-container">
                     <div className="desktop-ordered-item-count-align">
-                      {/* <HiOutlineMinusSm
-                        className="dish-minus-icon"
-                        onClick={this.clickMinus}
-                      /> */}
-                      <p className="dish-count">{item.count}</p>
-                      {/* <BsPlus
-                        className="dish-plus-icon"
-                        onClick={this.clickPlus}
-                      /> */}
+                      <button
+                        className="cart-minus-icon"
+                        onClick={() => this.onClickMinus(item.id)}
+                        testid="cart-minus-button"
+                      >
+                        <HiOutlineMinusSm className="dish-minus-icon" />
+                      </button>
+                      <p className="dish-count" testid="item-quantity">
+                        {item.count}
+                      </p>
+                      <button
+                        className="cart-plus-icon"
+                        onClick={() => this.onClickPlus(item.id)}
+                        testid="cart-plus-button"
+                      >
+                        <BsPlus className="dish-plus-icon" />
+                      </button>
                     </div>
                   </div>
                   <div className="desktop-ordered-item-price-container">
                     <div className="desktop-ordered-item-price-align">
-                      {/* <FaRupeeSign className="dish-rupees-icon" /> */}
+                      <FaRupeeSign className="dish-rupees-icon" />
                       <p className="dish-cost">{`${item.cost}.00`}</p>
                     </div>
                   </div>
@@ -136,8 +140,11 @@ class Cart extends Component {
               <div className="price-container">
                 <h1 className="final-price-heading">Order Total:</h1>
                 <div className="total-price-container">
-                  {/* <FaRupeeSign className="dish-rupees-icon" /> */}
-                  <p className="final-price">{`${sum}.00`}</p>
+                  <FaRupeeSign className="dish-rupees-icon" />
+                  <p
+                    className="final-price"
+                    testid="total-price"
+                  >{`${sum}.00`}</p>
                 </div>
               </div>
               <div className="order-placed-btn-container">
@@ -162,11 +169,7 @@ class Cart extends Component {
       <Header />
       <div className="success-container">
         <div className="success-card">
-          {/* <FaCheckCircle className="check-circle-icon" /> */}
-          <img
-            src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628501365/Mini%20Projects/Vector_tvjslg.png"
-            className="check-circle-icon"
-          />
+          <FaCheckCircle className="check-circle-icon" />
           <h1 className="success-heading">Payment Successful</h1>
           <p className="success-para">
             Thank you for ordering Your payment is successfully completed.
@@ -184,7 +187,6 @@ class Cart extends Component {
   render() {
     const {itemsList, isClicked} = this.state
     const size = itemsList.length
-    // console.log(isClicked)
     return (
       <div>
         {isClicked ? (

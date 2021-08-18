@@ -9,6 +9,12 @@
   padding-right: 25px;
 }
 
+.cart-minus-icon,
+.cart-plus-icon {
+  border: none;
+  background: #ffffff;
+}
+
 .mobile-ordered-food-items-container {
   padding-left: 0px;
   margin: 0;
@@ -41,6 +47,7 @@
 .dish-count-container {
   display: flex;
   flex-direction: row;
+  border: 1px solid red;
 }
 .dish-minus-icon {
   border: 1px solid #334155;
@@ -98,6 +105,7 @@
 }
 .total-price-container {
   display: flex;
+  align-items: center;
   margin-top: 15px;
 }
 .final-price {
@@ -152,6 +160,7 @@
 .check-circle-icon {
   height: 64px;
   width: 64px;
+  color: green;
 }
 .success-heading {
   font-family: DM Sans;
@@ -283,6 +292,7 @@
 }
 .desktop-ordered-item-price-align {
   display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 767px) {

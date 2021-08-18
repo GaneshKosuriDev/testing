@@ -464,7 +464,6 @@ describe('Tasty Kitchen Authentication Login Route Tests', () => {
     userEvent.type(passwordField, 'rahul@2021')
     userEvent.click(signinButton)
     await waitFor(() => screen.queryByText('Home'))
-    console.log(history.location.pathname, 'test history')
     restoreHistoryReplace(history)
   })
 })

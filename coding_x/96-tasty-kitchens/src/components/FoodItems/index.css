@@ -80,6 +80,13 @@
   margin-top: 4px;
 }
 
+.minus-button,
+.plus-button {
+  border: none;
+  background: #ffffff;
+  padding: 0;
+}
+
 .minus-icon {
   width: 16px;
   height: 16px;

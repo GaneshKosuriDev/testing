@@ -4,7 +4,9 @@ dependencies:
   '@testing-library/user-event': 12.6.2
   chalk: 4.1.0
   history: 5.0.0
+  jest-localstorage-mock: 2.4.16
   js-cookie: 2.2.1
+  mock-local-storage: 1.1.17
   msw: 0.34.0
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
@@ -4124,6 +4126,11 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-OZuWHDlYcIda8sJLY4Ec6nWq2hRjlyCqCZ+jCflyleMkVt3tPedDVErvHslyS2nbO+SlBFMSBJYvtLMwxnrzjA==
+  /core-js/0.8.4:
+    deprecated: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+    dev: false
+    resolution:
+      integrity: sha1-wiZl8eDRucPF4bCNq9HxCGleT88=
   /core-js/2.6.12:
     deprecated: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
     dev: true
@@ -4800,6 +4807,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-5c54Bk5Dw4qAxNOI1pFEizPSjVsx5+bpJKmL2kPn8JhBUq2q09tTCa3mjijun2NfK78NMouDYNMBkOrPZiS+ig==
+  /dom-walk/0.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
   /domain-browser/1.2.0:
     dev: true
     engines:
@@ -6128,6 +6139,13 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-awConJSVCHVGND6x3tmMaKcQvwXLhjdkmomy2W+Goaui8YPgYgXJZewhg3fWC+DlfqqQuWg8AwqjGTD2nAPVWg==
+  /global/4.4.0:
+    dependencies:
+      min-document: 2.19.0
+      process: 0.11.10
+    dev: false
+    resolution:
+      integrity: sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
   /globals/11.12.0:
     dev: true
     engines:
@@ -7396,6 +7414,12 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-i4xlXpsVSMeKvg2cEKdfhh0H39qlJlP5Ex1yQxwF9ubahboQYMgTtz5oML35AVA3B4Eu+YsmwaiKVev9KCvLxg==
+  /jest-localstorage-mock/2.4.16:
+    dev: false
+    engines:
+      node: '>=6.16.0'
+    resolution:
+      integrity: sha512-nvP2pRM8BfsSYT0uvalB1z9C8oVKhENfcBIBB80/8NU5Vc4Q4LijGbKNedOeIIB8xujpsLkCOjxj1Clv5oOaww==
   /jest-matcher-utils/26.6.2:
     dependencies:
       chalk: 4.1.0
@@ -8314,6 +8338,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
+  /min-document/2.19.0:
+    dependencies:
+      dom-walk: 0.1.2
+    dev: false
+    resolution:
+      integrity: sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU=
   /min-indent/1.0.1:
     dev: false
     engines:
@@ -8445,6 +8475,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+  /mock-local-storage/1.1.17:
+    dependencies:
+      core-js: 0.8.4
+      global: 4.4.0
+    dev: false
+    resolution:
+      integrity: sha512-vF5571cY3N/XFw8Oxr+0HmY6PedvO6i2IZrpnDV35sh7alhrh1RYYFZzItuh5OhJrQoulNSruiw1KHk5QB/EQg==
   /move-concurrently/1.0.1:
     dependencies:
       aproba: 1.2.0
@@ -10145,7 +10182,6 @@ packages:
     resolution:
       integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
   /process/0.11.10:
-    dev: true
     engines:
       node: '>= 0.6.0'
     resolution:
@@ -13136,8 +13172,10 @@ specifiers:
   eslint-plugin-prettier: 3.3.1
   history: 5.0.0
   husky: 4.3.8
+  jest-localstorage-mock: 2.4.16
   js-cookie: 2.2.1
   lint-staged: 10.5.4
+  mock-local-storage: 1.1.17
   msw: 0.34.0
   npm-run-all: 4.1.5
   prettier: 2.2.1

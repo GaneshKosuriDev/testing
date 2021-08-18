@@ -12,26 +12,32 @@ class FoodItems extends Component {
   }
 
   isFoodItemPresentInCart = () => {
-    const oldLocalStorageItems =
-      JSON.parse(localStorage.getItem('cartData')) || []
+    const {activeCount} = this.state
+    const items = localStorage.getItem('cartData')
+    let oldLocalStorageItems = []
+    if (items) {
+      oldLocalStorageItems = JSON.parse(items)
+    }
     const {
-      itemDetails: {id},
+      itemDetails: {name},
+      itemDetails,
     } = this.props
 
-    const isItemPresent = oldLocalStorageItems.filter(
-      eachItem => eachItem.id === id,
+    const itemIndex = oldLocalStorageItems.findIndex(
+      eachItem => eachItem.name === name,
     )
-    if (isItemPresent.length) {
-      return true
-    }
-    return false
+
+    return itemIndex !== -1
   }
 
   updateLocalStorage = count => {
-    const oldLocalStorageItems =
-      JSON.parse(localStorage.getItem('cartData')) || []
+    const items = localStorage.getItem('cartData')
+    let oldLocalStorageItems = []
+    if (items) {
+      oldLocalStorageItems = JSON.parse(items)
+    }
+
     const {itemDetails} = this.props
-    Object.assign(itemDetails, {count})
     if (this.isFoodItemPresentInCart()) {
       const newData = oldLocalStorageItems.map(eachItem => {
         const item = eachItem
@@ -42,6 +48,7 @@ class FoodItems extends Component {
       })
       localStorage.setItem('cartData', JSON.stringify(newData))
     } else {
+      Object.assign(itemDetails, {count})
       oldLocalStorageItems.push(itemDetails)
       localStorage.setItem('cartData', JSON.stringify(oldLocalStorageItems))
     }
@@ -87,7 +94,7 @@ class FoodItems extends Component {
 
     return (
       <>
-        <div className="each-food-item-container" data-testid="foodItem">
+        <div className="each-food-item-container" testid="foodItem">
           <div className="each-item-image">
             <img
               src={itemDetails.imageUrl}
@@ -111,25 +118,31 @@ class FoodItems extends Component {
             </div>
             {isClicked ? (
               <div className="each-item-counter-container" id={itemDetails.id}>
-                <div className="minus-icon-container">
+                <button
+                  className="minus-button"
+                  testid="minus-button"
+                  onClick={this.onClickMinusIcon}
+                >
                   <img
                     src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482877/Mini%20Projects/minus-icon_idmjn3.png"
                     alt="minus-icon"
                     className="minus-icon"
-                    onClick={this.onClickMinusIcon}
                   />
-                </div>
-                <p className="count-value" data-testid="active-count">
+                </button>
+                <p className="count-value" testid="active-count">
                   {activeCount}
                 </p>
-                <div className="plus-icon-container">
+                <button
+                  className="plus-button"
+                  testid="plus-button"
+                  onClick={this.onClickPlusIcon}
+                >
                   <img
                     src="https://res.cloudinary.com/dj7inbtyj/image/upload/v1628482877/Mini%20Projects/plus-icon_nphdse.png"
                     alt="plus-icon"
                     className="plus-icon"
-                    onClick={this.onClickPlusIcon}
                   />
-                </div>
+                </button>
               </div>
             ) : (
               <button
